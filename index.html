@@ -97,17 +97,17 @@
 
       // 1. VIDEO LINK
       // Paste your YouTube link OR a direct link to an .mp4 file here.
-      const CONFIG_VIDEO_URL = "https://youtu.be/J3qQlzqLpI4?si=QGx3qdhgiVt4GhfK"; 
+      const CONFIG_VIDEO_URL = "https://youtu.be/J3qQlzqLpI4?si=AOlVvCRutB8Up5CY"; 
 
       // 2. VIDEO TITLE
       const CONFIG_VIDEO_TITLE = "OAMENI CARE CRESC OAMENI";
 
       // 3. VIDEO DESCRIPTION
-      const CONFIG_VIDEO_DESC = "";
+      const CONFIG_VIDEO_DESC = "Un episod de suflet despre impactul mentoratului în educație. Discutăm despre cum profesorii și părinții lucrează împreună pentru a forma caractere puternice și viitori lideri.";
 
       // 4. THUMBNAIL IMAGE URL
       // The image shown before the video plays.
-      const CONFIG_THUMBNAIL_URL = "https://picsum.photos/seed/people/1200/675";
+      const CONFIG_THUMBNAIL_URL = "https://img.youtube.com/vi/J3qQlzqLpI4/maxresdefault.jpg";
 
       // 5. SECRET GIF (Easter Egg)
       // The GIF shown when clicking "Despre Proiect"
@@ -181,24 +181,24 @@
         );
       };
 
-      const Header = ({ onEasterEggClick }) => {
+      const Header = ({ onEasterEggClick, onLogoClick }) => {
         return (
           <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between items-center h-16">
                 <div className="flex items-center">
-                  <a href="#" className="flex flex-col group">
-                    <span className="text-2xl font-black tracking-tight text-media-dark group-hover:opacity-80 transition-opacity">
+                  <button onClick={onLogoClick} className="flex flex-col group focus:outline-none text-left">
+                    <span className="text-2xl font-black tracking-tight text-media-dark transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(255,215,0,0.6)]">
                       {BRAND_NAME}<span className="text-media-yellow">.</span>
                     </span>
                     <span className="text-[0.6rem] font-semibold text-gray-500 uppercase tracking-wider hidden sm:block">
                       {SCHOOL_NAME}
                     </span>
-                  </a>
+                  </button>
                 </div>
 
                 <nav className="hidden md:flex space-x-8">
-                  <a href="#" className="text-gray-900 font-medium hover:text-media-yellow transition-colors border-b-2 border-media-yellow pb-1">Acasa</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); onLogoClick(); }} className="text-gray-900 font-medium hover:text-media-yellow transition-colors border-b-2 border-media-yellow pb-1">Acasa</a>
                   <button onClick={onEasterEggClick} className="text-gray-500 font-medium hover:text-media-dark transition-colors focus:outline-none">
                     Despre Proiect
                   </button>
@@ -364,6 +364,11 @@
           setHeroPlaying(true);
         };
 
+        const resetView = () => {
+          setHeroPlaying(false);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
         if (isLoading) {
           return <LoadingScreen />;
         }
@@ -374,7 +379,7 @@
               Made by Zairo as a idea, not used for public.
             </div>
 
-            <Header onEasterEggClick={() => setShowEasterEgg(true)} />
+            <Header onEasterEggClick={() => setShowEasterEgg(true)} onLogoClick={resetView} />
 
             <EasterEggOverlay isOpen={showEasterEgg} onClose={() => setShowEasterEgg(false)} />
 
