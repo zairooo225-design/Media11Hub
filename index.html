@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Media11Hub - Școala Gimnazială Nr. 11 Buzău</title>
+    <title>Media11Hub - School 2025</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Plus Jakarta Sans for a modern, geometric, academic look -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Outfit (Modern/Friendly) -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- React & ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -26,48 +26,61 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+              sans: ['Outfit', 'sans-serif'],
             },
             colors: {
-              media: {
-                yellow: '#FFD700', 
-                dark: '#0A0A0A',
-                card: '#FFFFFF',
-                subtle: '#F4F4F5',
+              glass: {
+                surface: 'rgba(255, 255, 255, 0.65)',
+                border: 'rgba(255, 255, 255, 0.8)',
+                highlight: 'rgba(255, 255, 255, 0.9)',
+              },
+              brand: {
+                yellow: '#FCD34D', 
+                gold: '#FFD700',   
+                blue: '#3B82F6',
+                red: '#EF4444',
+                zairo: '#6366f1' // Indigo for Zairo
               }
             },
-            backgroundImage: {
-              'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
-            },
             animation: {
-              'fade-in': 'fadeIn 0.6s ease-out forwards',
-              'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-              'ticker': 'ticker 30s linear infinite',
-              'glow': 'glow 2s ease-in-out infinite alternate',
               'blob': 'blob 7s infinite',
+              'gradient-x': 'gradient-x 3s ease infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'pop-in': 'popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'fade-up': 'fadeUp 0.8s ease-out forwards',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'text-reveal': 'textReveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+              'bounce-1': 'bounce 1s infinite 0s',
+              'bounce-2': 'bounce 1s infinite 0.2s',
+              'bounce-3': 'bounce 1s infinite 0.4s',
+              'bounce-4': 'bounce 1s infinite 0.6s',
             },
             keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0' },
-                '100%': { opacity: '1' },
-              },
-              slideUp: {
-                '0%': { opacity: '0', transform: 'translateY(40px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              },
-              ticker: {
-                '0%': { transform: 'translateX(0)' },
-                '100%': { transform: 'translateX(-100%)' },
-              },
-              glow: {
-                '0%': { boxShadow: '0 0 10px rgba(255, 215, 0, 0.1)' },
-                '100%': { boxShadow: '0 0 25px rgba(255, 215, 0, 0.4)' },
-              },
               blob: {
                 '0%': { transform: 'translate(0px, 0px) scale(1)' },
                 '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
                 '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
                 '100%': { transform: 'translate(0px, 0px) scale(1)' },
+              },
+              'gradient-x': {
+                '0%, 100%': { 'background-position': '0% 50%' },
+                '50%': { 'background-position': '100% 50%' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              popIn: {
+                '0%': { opacity: '0', transform: 'scale(0.95)' },
+                '100%': { opacity: '1', transform: 'scale(1)' },
+              },
+              fadeUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              textReveal: {
+                '0%': { transform: 'translateY(100%)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
               }
             }
           }
@@ -77,33 +90,67 @@
 
     <style>
       body {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #FAFAFA;
+        background-color: #F8FAFC; 
+        color: #1E293B;
         overflow-x: hidden;
       }
-      
-      /* Smooth scrolling */
-      html {
-        scroll-behavior: smooth;
+
+      /* iOS Liquid Glass - More Transparent & Glossy */
+      .liquid-card {
+        background: rgba(255, 255, 255, 0.4); 
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 
+          0 8px 32px 0 rgba(31, 38, 135, 0.07),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+        border-radius: 2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
 
-      /* Custom Scrollbar */
+      .liquid-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+          0 20px 25px -5px rgba(0, 0, 0, 0.05),
+          0 10px 10px -5px rgba(0, 0, 0, 0.02),
+          inset 0 0 20px rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      /* Custom Play Button Glow */
+      .play-button-glow {
+        box-shadow: 0 0 0 0 rgba(252, 211, 77, 0.7);
+        animation: pulse-yellow 2s infinite;
+      }
+
+      @keyframes pulse-yellow {
+        0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(252, 211, 77, 0.7);
+        }
+        70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 20px rgba(252, 211, 77, 0);
+        }
+        100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(252, 211, 77, 0);
+        }
+      }
+
+      /* Smooth Scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #ccc;
+        background: #CBD5E1;
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #999;
-      }
-
-      .text-glow {
-        text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        background: #94A3B8;
       }
     </style>
   </head>
@@ -114,356 +161,366 @@
       const { useState, useEffect, useRef } = React;
       
       // *********************************************************************************
+      //      CONFIGURATION
       // *********************************************************************************
-      //
-      //      👇👇👇  CONFIGURATION AREA  👇👇👇
-      //
-      // *********************************************************************************
-      // *********************************************************************************
-
-      // 1. VIDEO LINK
-      const CONFIG_VIDEO_URL = "https://youtu.be/J3qQlzqLpI4?si=AOlVvCRutB8Up5CY"; 
-
-      // 2. VIDEO TITLE
-      const CONFIG_VIDEO_TITLE = "OAMENI CARE CRESC OAMENI";
-
-      // 3. VIDEO DESCRIPTION
-      const CONFIG_VIDEO_DESC = "Un episod de suflet despre impactul mentoratului în educație. Discutăm despre cum profesorii și părinții lucrează împreună pentru a forma caractere puternice și viitori lideri.";
-
-      // 4. SECRET GIF (Easter Egg)
-      const CONFIG_GIF_URL = "https://i.imgur.com/84Hb4b5.gif";
+      
+      const CONFIG_VIDEO_URL = "https://youtu.be/J3qQlzqLpI4?si=3gsR-xw7yTm3AQyt"; 
+      const CONFIG_VIDEO_TITLE = "Oameni care cresc oameni";
+      const CONFIG_VIDEO_SUB = "Episodul 01";
+      const CONFIG_DESC = "Un dialog esențial despre educație și mentorat la Școala Nr. 11.";
+      const Z_GAMES_LOGO = "https://i.imgur.com/qvrrEQX.png";
+      const SECRET_GIF = "https://i.imgur.com/84Hb4b5.gif";
+      const CUSTOM_MIC_ICON = "https://i.imgur.com/Fni5nvq.png";
 
       // *********************************************************************************
-      //      👆👆👆  END OF SETTINGS  👆👆👆
+      //      COMPONENTS
       // *********************************************************************************
-      // *********************************************************************************
 
-      // --- HELPERS ---
-      const getYoutubeId = (url) => {
-        if (!url) return null;
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
-      };
-
-      // AUTOMATIC THUMBNAIL GENERATOR
-      const getThumbnail = (url) => {
-        const id = getYoutubeId(url);
-        if (id) {
-          // Try maxresdefault, fallback happens naturally in player if not found usually, 
-          // but for image tags we assume high quality for recent videos.
-          return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-        }
-        // Fallback placeholder if not a YouTube link
-        return "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80";
-      };
-
-      const AUTO_THUMBNAIL = getThumbnail(CONFIG_VIDEO_URL);
-
-      // --- ICONS ---
-      const Icon = ({ name, size = 24, className = "" }) => {
-        const icons = {
-          play: <polygon points="6 3 20 12 6 21 6 3"></polygon>,
-          pause: <g><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></g>,
-          menu: <g><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="18" x2="20" y2="18"></line></g>,
-          facebook: <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>,
-          youtube: <g><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></g>,
-          share: <g><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></g>,
-          check: <polyline points="20 6 9 17 4 12"></polyline>,
-          mic: <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>,
-          globe: <circle cx="12" cy="12" r="10"></circle>,
+      const Icon = ({ name, size = 20, className = "" }) => {
+        const standardIcons = {
+          play: <polygon points="5 3 19 12 5 21 5 3"></polygon>,
+          calendar: <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>,
+          info: <circle cx="12" cy="12" r="10"></circle>,
           arrowRight: <line x1="5" y1="12" x2="19" y2="12"></line>,
-          x: <g><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></g>
+          mic: <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>,
+          x: <line x1="18" y1="6" x2="6" y2="18"></line>,
+          pause: <rect x="6" y="4" width="4" height="16"></rect>
         };
 
+        const brandIcons = {
+          facebook: <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>,
+          youtube: <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>,
+          tiktok: <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"></path>
+        };
+
+        const isBrand = !!brandIcons[name];
+        
         return (
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             width={size} 
             height={size} 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
+            viewBox={isBrand ? "0 0 24 24" : "0 0 24 24"}
+            fill={isBrand ? "currentColor" : "none"}
+            stroke={isBrand ? "none" : "currentColor"}
+            strokeWidth={isBrand ? "0" : "2"}
             strokeLinecap="round" 
             strokeLinejoin="round" 
             className={className}
           >
-            {icons[name] || <circle cx="12" cy="12" r="10"></circle>}
+            {brandIcons[name] || standardIcons[name] || <circle cx="12" cy="12" r="10"></circle>}
+            {name === 'pause' && <rect x="14" y="4" width="4" height="16"></rect>}
           </svg>
         );
       };
 
-      // --- COMPONENTS ---
-
-      const Ticker = () => {
-        return (
-          <div className="bg-media-dark text-white text-xs font-bold py-2 overflow-hidden whitespace-nowrap border-b border-white/10 relative z-50">
-            <div className="inline-block animate-ticker">
-              <span className="mx-8 uppercase tracking-widest">• Media11Hub • Vocea noii generații</span>
-              <span className="mx-8 uppercase tracking-widest text-media-yellow">• {CONFIG_VIDEO_TITLE} • Disponibil Acum</span>
-              <span className="mx-8 uppercase tracking-widest">• Școala Gimnazială Nr. 11 Buzău</span>
-              <span className="mx-8 uppercase tracking-widest">• Educație • Inovație • Viitor</span>
-              <span className="mx-8 uppercase tracking-widest text-media-yellow">• Abonează-te la canalul nostru</span>
-               <span className="mx-8 uppercase tracking-widest">• Media11Hub • Vocea noii generații</span>
-              <span className="mx-8 uppercase tracking-widest text-media-yellow">• {CONFIG_VIDEO_TITLE} • Disponibil Acum</span>
-              <span className="mx-8 uppercase tracking-widest">• Școala Gimnazială Nr. 11 Buzău</span>
-            </div>
-          </div>
-        );
-      };
-
-      const Navbar = ({ onEasterEgg, onLogoClick }) => {
-        const [isScrolled, setIsScrolled] = useState(false);
-
+      // --- Cinematic Loading Screen ---
+      const LoadingScreen = ({ onComplete }) => {
+        const [stage, setStage] = useState(0);
+        
         useEffect(() => {
-          const handleScroll = () => setIsScrolled(window.scrollY > 20);
-          window.addEventListener('scroll', handleScroll);
-          return () => window.removeEventListener('scroll', handleScroll);
+          const sequence = [
+             { time: 3500, stage: 1 }, 
+             { time: 2500, stage: 2 }, 
+             { time: 2500, stage: 3 }, 
+             { time: 2000, stage: 4 }, 
+             { time: 3500, stage: 5 }, 
+          ];
+
+          let currentStep = 0;
+          
+          const runSequence = () => {
+             if (currentStep >= sequence.length) {
+                onComplete();
+                return;
+             }
+             const { time, stage: nextStage } = sequence[currentStep];
+             setTimeout(() => {
+                setStage(nextStage);
+                currentStep++;
+                runSequence();
+             }, time);
+          };
+
+          runSequence();
         }, []);
 
-        return (
-          <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3 mt-0' : 'bg-transparent py-5 mt-8'}`}>
-            <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-              <button onClick={onLogoClick} className="flex items-center gap-3 group focus:outline-none">
-                <div className="w-10 h-10 bg-media-dark rounded-lg flex items-center justify-center text-media-yellow shadow-lg group-hover:scale-105 transition-transform duration-300">
-                  <span className="font-bold text-xl">M</span>
-                </div>
-                <div className="flex flex-col items-start text-left">
-                  <span className="text-xl font-extrabold tracking-tight text-media-dark leading-none">
-                    Media11Hub<span className="text-media-yellow">.</span>
-                  </span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mt-1">Școala 11 Buzău</span>
-                </div>
-              </button>
-
-              <div className="hidden md:flex items-center gap-8">
-                <a href="#" onClick={(e) => { e.preventDefault(); onLogoClick(); }} className="text-sm font-semibold text-gray-800 hover:text-media-yellow transition-colors">Acasă</a>
-                <button onClick={onEasterEgg} className="text-sm font-semibold text-gray-500 hover:text-media-dark transition-colors">Despre Proiect</button>
-                <a href="https://youtube.com" target="_blank" className="px-5 py-2 bg-media-dark text-white rounded-full text-sm font-bold hover:bg-media-yellow hover:text-media-dark transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg">
-                  Abonează-te
-                </a>
-              </div>
-            </div>
-          </nav>
+        const renderText = (text, subtext = "") => (
+          <div className="flex flex-col items-center justify-center h-screen animate-pop-in">
+             <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter mb-4 text-center px-4">{text}</h1>
+             {subtext && <p className="text-xl text-slate-500 font-medium tracking-widest uppercase">{subtext}</p>}
+          </div>
         );
-      };
 
-      const VideoSection = ({ isPlaying, onPlay }) => {
-        const [copied, setCopied] = useState(false);
-        const [isHovering, setIsHovering] = useState(false);
-
-        const handleShare = () => {
-          navigator.clipboard.writeText(CONFIG_VIDEO_URL);
-          setCopied(true);
-          setTimeout(() => setCopied(false), 2000);
-        };
-
-        const id = getYoutubeId(CONFIG_VIDEO_URL);
+        if (stage === 5) return null;
 
         return (
-          <div className="relative w-full max-w-6xl mx-auto mt-24 mb-20 px-4">
-            
-            {/* Background Blobs */}
-            <div className="absolute top-0 -left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-            <div className="absolute top-0 -right-20 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-            <div className="absolute -bottom-32 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
-              
-              {/* Header Info (Left) */}
-              <div className="lg:col-span-5 flex flex-col justify-center h-full pt-8 lg:pt-0 animate-slide-up">
-                 <div className="flex items-center gap-2 mb-4">
-                    <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                      <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
-                      Episod Nou
-                    </span>
-                    <span className="text-gray-400 text-xs font-medium">Sezonul 1 • Ep. 4</span>
-                 </div>
+          <div className="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center transition-all duration-500">
+            {stage === 0 && (
+              <div className="relative flex flex-col items-center animate-fade-up">
+                 <div className="absolute -inset-10 bg-brand-yellow/10 rounded-full blur-[60px] animate-pulse-slow"></div>
+                 <img src={Z_GAMES_LOGO} alt="Z Games" className="w-64 h-64 object-contain drop-shadow-2xl mb-8 animate-float" />
                  
-                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-media-dark leading-[1.1] mb-6 tracking-tight">
-                   {CONFIG_VIDEO_TITLE}
-                 </h1>
-                 
-                 <p className="text-lg text-gray-500 leading-relaxed mb-8 font-medium border-l-2 border-media-yellow pl-5">
-                   {CONFIG_VIDEO_DESC}
-                 </p>
-
-                 <div className="flex items-center gap-4">
-                    <button 
-                      onClick={handleShare}
-                      className="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-full font-bold hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm active:scale-95"
-                    >
-                      <Icon name={copied ? "check" : "share"} size={18} className={copied ? "text-green-500" : ""} />
-                      {copied ? "Link Copiat!" : "Distribuie"}
-                    </button>
+                 <div className="flex gap-3 mt-4">
+                    <div className="w-3 h-3 bg-brand-yellow rounded-full animate-bounce-1"></div>
+                    <div className="w-3 h-3 bg-brand-yellow rounded-full animate-bounce-2"></div>
+                    <div className="w-3 h-3 bg-brand-yellow rounded-full animate-bounce-3"></div>
+                    <div className="w-3 h-3 bg-brand-yellow rounded-full animate-bounce-4"></div>
                  </div>
               </div>
+            )}
 
-              {/* Video Player (Right) */}
-              <div className="lg:col-span-7 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                <div 
-                  className={`relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 ${isPlaying ? 'ring-4 ring-media-dark' : 'hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] ring-1 ring-gray-200'}`}
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                >
-                  {isPlaying ? (
-                     <iframe 
-                      width="100%" 
-                      height="100%" 
-                      src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`} 
-                      title="YouTube video player" 
-                      frameBorder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                      allowFullScreen
-                      className="absolute inset-0 w-full h-full bg-black"
-                    ></iframe>
-                  ) : (
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center cursor-pointer group"
-                      style={{ backgroundImage: `url(${AUTO_THUMBNAIL})` }}
-                      onClick={onPlay}
-                    >
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-500 backdrop-blur-[0px] group-hover:backdrop-blur-[2px]"></div>
-                      
-                      {/* Custom Play Button */}
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                        <div className="relative">
-                          <div className="absolute inset-0 bg-white rounded-full blur opacity-40 animate-pulse"></div>
-                          <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 shadow-2xl transition-transform duration-300 group-hover:scale-110">
-                            <div className="w-14 h-14 bg-media-yellow rounded-full flex items-center justify-center text-media-dark shadow-inner">
-                              <Icon name="play" size={28} className="ml-1 fill-current" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Duration/Quality Badge (Fake/Static for now) */}
-                      <div className="absolute bottom-4 right-4 px-2 py-1 bg-black/70 backdrop-blur-md rounded text-white text-xs font-bold">
-                        HD • 4K
-                      </div>
-                    </div>
-                  )}
-                </div>
-                
-                {/* Reflection effect */}
-                {!isPlaying && (
-                   <div className="w-[90%] mx-auto h-4 bg-black/20 blur-xl rounded-[100%] mt-4 opacity-40"></div>
-                )}
-              </div>
-            </div>
+            {stage === 1 && renderText("Z GAMES", "PRESENTS")}
+            {stage === 2 && renderText("MEDIA 11 HUB", "A MODERN SCHOOL WEBSITE")}
+            {stage === 3 && renderText("FOR FUN", "JUST ENJOY IT")}
+            {stage === 4 && (
+               <div className="flex flex-col items-center justify-center h-screen animate-pop-in">
+                  <h1 className="text-3xl md:text-5xl font-bold text-slate-800 text-center mb-2">Also...</h1>
+                  <h2 className="text-4xl md:text-6xl font-black text-brand-zairo text-center tracking-tight">CREDITS TO ZAIRO</h2>
+               </div>
+            )}
           </div>
         );
       };
 
-      const Footer = () => {
+      // --- Custom Video Player Component ---
+      const CustomVideoPlayer = ({ videoId }) => {
+        const [isPlaying, setIsPlaying] = useState(false);
+        const [isHovered, setIsHovered] = useState(false);
+
+        // ERROR 153 FIX IMPLEMENTATION:
+        // 1. Using youtube-nocookie.com often bypasses strict referrer checks.
+        // 2. Passing the 'origin' parameter is crucial for embeds to work in some environments.
+        const origin = window.location.origin || ''; 
+        const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0&origin=${origin}`;
+        
+        // Use hqdefault.jpg for reliable thumbnail
+        const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+
         return (
-          <footer className="relative bg-white border-t border-gray-100 pt-20 pb-10 overflow-hidden">
-            {/* Background Grid Pattern */}
-            <div className="absolute inset-0 bg-grid-pattern opacity-50 pointer-events-none"></div>
+          <div 
+            className="relative w-full aspect-video bg-black rounded-[1.5rem] overflow-hidden shadow-inner border border-white/20 group cursor-pointer"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={() => setIsPlaying(true)}
+          >
+            {!isPlaying ? (
+              <>
+                {/* Thumbnail Image */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                  style={{ backgroundImage: `url(${thumbnailUrl})` }}
+                />
+                
+                {/* Dark Overlay */}
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300"></div>
 
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8">
-                <div>
-                   <h2 className="text-3xl font-black text-media-dark mb-2">Media11Hub.</h2>
-                   <p className="text-gray-500 max-w-sm">
-                     Platforma oficială de podcast și media a Școlii Gimnaziale Nr. 11 Buzău.
-                     Inspirație prin educație.
-                   </p>
-                </div>
-                <div className="flex gap-4">
-                  {[
-                    { icon: 'facebook', link: 'https://facebook.com' },
-                    { icon: 'youtube', link: 'https://youtube.com' },
-                    { icon: 'mic', link: '#' } // generic placeholder
-                  ].map((social, idx) => (
-                    <a 
-                      key={idx}
-                      href={social.link} 
-                      target="_blank"
-                      className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-600 hover:bg-media-dark hover:text-white hover:border-media-dark transition-all duration-300"
-                    >
-                      <Icon name={social.icon} size={20} />
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-gray-100 pt-10">
-                <div>
-                  <h4 className="font-bold text-gray-900 mb-4">Navigare</h4>
-                  <ul className="space-y-2 text-sm text-gray-500">
-                    <li><a href="#" className="hover:text-media-yellow transition-colors">Acasă</a></li>
-                    <li><a href="#" className="hover:text-media-yellow transition-colors">Episoade</a></li>
-                    <li><a href="#" className="hover:text-media-yellow transition-colors">Despre noi</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 mb-4">Legal</h4>
-                  <ul className="space-y-2 text-sm text-gray-500">
-                    <li><a href="#" className="hover:text-media-yellow transition-colors">Termeni & Condiții</a></li>
-                    <li><a href="#" className="hover:text-media-yellow transition-colors">Confidențialitate</a></li>
-                  </ul>
-                </div>
-                <div className="col-span-2 md:col-span-2">
-                   <div className="bg-media-subtle p-6 rounded-2xl">
-                      <h4 className="font-bold text-gray-900 mb-2">Vrei să participi?</h4>
-                      <p className="text-xs text-gray-500 mb-4">Dacă ești elev sau profesor și ai o poveste de spus, contactează echipa noastră.</p>
-                      <a href="mailto:contact@scoala11buzau.ro" className="text-sm font-bold text-media-dark hover:text-media-yellow transition-colors flex items-center gap-1">
-                        Scrie-ne <Icon name="arrowRight" size={14} />
-                      </a>
+                {/* Play Button Overlay - REFINED UI */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                   <div className="w-24 h-24 md:w-28 md:h-28 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/40 play-button-glow transition-transform duration-300 group-hover:scale-110">
+                      <div className="ml-2 text-white drop-shadow-md">
+                        <Icon name="play" size={48} fill="currentColor" />
+                      </div>
                    </div>
                 </div>
-              </div>
-              
-              <div className="mt-16 text-center text-xs text-gray-300 font-medium">
-                © 2025 Media11Hub. Toate drepturile rezervate. Design by Zairo.
-              </div>
-            </div>
-          </footer>
+
+                {/* Branding / Details Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
+                  <div className="flex items-end justify-between">
+                    <div className="mb-2">
+                      <span className="text-brand-yellow text-xs font-bold uppercase tracking-widest mb-1 block">Vizionează Acum</span>
+                      <h3 className="text-white text-lg font-bold line-clamp-1">{CONFIG_VIDEO_TITLE}</h3>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Decorative Progress Bar - VISUALLY DISTINCT */}
+                <div className="absolute bottom-0 left-0 right-0 h-2 bg-white/20">
+                  <div className="h-full w-2/5 bg-brand-yellow rounded-r-full shadow-[0_0_15px_rgba(252,211,77,0.9)]"></div>
+                </div>
+              </>
+            ) : (
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src={embedUrl} 
+                title="Media11Hub Player" 
+                frameBorder="0" 
+                referrerPolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowFullScreen 
+                className="absolute inset-0 w-full h-full"
+              ></iframe>
+            )}
+          </div>
         );
       };
 
+      // --- Easter Egg Modal ---
       const EasterEgg = ({ isOpen, onClose }) => {
         if (!isOpen) return null;
         return (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-             <div className="absolute inset-0 bg-black/60 backdrop-blur-md animate-fade-in" onClick={onClose}></div>
-             <div className="relative z-10 bg-white p-2 rounded-2xl shadow-2xl animate-blob w-full max-w-2xl transform transition-all duration-500 scale-100">
-                <button onClick={onClose} className="absolute -top-12 right-0 text-white hover:text-media-yellow transition-colors">
-                  <Icon name="x" size={32} />
-                </button>
-                <img src={CONFIG_GIF_URL} alt="Secret" className="w-full h-auto rounded-xl" />
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md animate-pop-in p-4" onClick={onClose}>
+             <div className="bg-white p-2 rounded-2xl shadow-2xl max-w-lg w-full transform transition-all scale-100">
+                <div className="relative">
+                   <button className="absolute top-2 right-2 bg-black/50 hover:bg-black text-white rounded-full p-1 transition-colors" onClick={onClose}>
+                      <Icon name="x" size={16} />
+                   </button>
+                   <img src={SECRET_GIF} alt="Classified" className="w-full rounded-xl" />
+                   <div className="absolute bottom-4 left-0 right-0 text-center">
+                      <span className="bg-black/70 text-brand-yellow px-3 py-1 rounded-full text-xs font-mono tracking-widest">
+                         PROJECT CLASSIFIED: ZAIRO
+                      </span>
+                   </div>
+                </div>
              </div>
           </div>
         );
       };
 
-      const App = () => {
-        const [isPlaying, setIsPlaying] = useState(false);
-        const [showEasterEgg, setShowEasterEgg] = useState(false);
+      // --- Floating Background Blobs ---
+      const BackgroundBlobs = () => (
+        <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-[80px] opacity-40 animate-blob"></div>
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-[80px] opacity-40 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-red-100 rounded-full mix-blend-multiply filter blur-[80px] opacity-40 animate-blob animation-delay-4000"></div>
+        </div>
+      );
 
-        const resetView = () => {
-          setIsPlaying(false);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+      // --- Main Dashboard ---
+      const Dashboard = ({ onTriggerEasterEgg }) => {
+        const getYoutubeId = (url) => {
+          try {
+            const urlObj = new URL(url);
+            // Handle 'si' param and other tracking junk
+            if (urlObj.hostname === 'youtu.be') return urlObj.pathname.slice(1);
+            if (urlObj.hostname.includes('youtube.com')) return urlObj.searchParams.get('v');
+            return null;
+          } catch (e) {
+            return "J3qQlzqLpI4"; 
+          }
         };
+        const id = getYoutubeId(CONFIG_VIDEO_URL) || "J3qQlzqLpI4";
 
         return (
-          <div className="min-h-screen bg-FAFAFA selection:bg-media-yellow selection:text-black">
-            <Ticker />
-            <Navbar onEasterEgg={() => setShowEasterEgg(true)} onLogoClick={resetView} />
+          <div className="min-h-screen p-6 md:p-10 flex flex-col items-center">
             
-            <main className="flex flex-col relative overflow-hidden">
-               {/* Decorative Grid Background visible on main area */}
-               <div className="absolute top-0 inset-x-0 h-[80vh] bg-grid-pattern opacity-[0.03] pointer-events-none"></div>
-               
-               <VideoSection isPlaying={isPlaying} onPlay={() => setIsPlaying(true)} />
-            </main>
+            {/* Header */}
+            <header className="w-full max-w-6xl flex justify-center mb-12 animate-pop-in">
+              <div className="text-center relative">
+                 <div className="absolute -inset-10 bg-white/40 blur-[40px] rounded-full -z-10"></div>
+                 <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-2 text-brand-gold pb-2 drop-shadow-sm">
+                   MEDIA11HUB
+                 </h1>
+                 <p className="text-slate-500 font-medium tracking-wide uppercase text-sm md:text-base">
+                   Școala Gimnazială Nr. 11 Buzău
+                 </p>
+              </div>
+            </header>
 
-            <Footer />
-            
-            <EasterEgg isOpen={showEasterEgg} onClose={() => setShowEasterEgg(false)} />
+            {/* Dashboard Grid */}
+            <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8">
+              
+              {/* Left: Main Video (Span 8) */}
+              <div className="lg:col-span-8 flex flex-col gap-6 animate-fade-up" style={{animationDelay: '0.1s'}}>
+                <div className="liquid-card p-4 h-full flex flex-col">
+                  <div className="flex gap-2 mb-4 px-2">
+                    <div className="w-3 h-3 rounded-full bg-red-400/80"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-400/80"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-400/80"></div>
+                  </div>
+                  
+                  {/* Custom Video Player Component */}
+                  <CustomVideoPlayer videoId={id} />
+
+                  <div className="mt-6 px-2 pb-2">
+                     <div className="flex items-center gap-3 mb-2">
+                       <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">Nou</span>
+                       <span className="text-slate-400 text-xs font-semibold uppercase tracking-widest">{CONFIG_VIDEO_SUB}</span>
+                     </div>
+                     <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">{CONFIG_VIDEO_TITLE}</h2>
+                     <p className="text-slate-500 leading-relaxed max-w-2xl">{CONFIG_DESC}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: Widgets (Span 4) */}
+              <div className="lg:col-span-4 flex flex-col gap-6 animate-fade-up" style={{animationDelay: '0.2s'}}>
+                
+                {/* About Widget */}
+                <div className="liquid-card p-6 bg-gradient-to-br from-white/60 to-yellow-50/50">
+                   <div className="w-12 h-12 bg-transparent rounded-2xl flex items-center justify-center mb-4">
+                     <img src={CUSTOM_MIC_ICON} alt="Icon" className="w-full h-full object-contain" />
+                   </div>
+                   <h3 className="text-lg font-bold text-slate-800 mb-1">Vocea Școlii</h3>
+                   <p className="text-sm text-slate-500 mb-4">
+                     Un podcast creat de elevi și profesori pentru comunitatea noastră.
+                   </p>
+                   <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden">
+                     <div className="h-full w-2/3 bg-brand-gold rounded-full"></div>
+                   </div>
+                   <p className="text-[10px] text-slate-400 mt-2 text-right">Sezonul 1 în desfășurare</p>
+                </div>
+
+                {/* Social Hub */}
+                <div className="liquid-card p-6 flex-grow flex flex-col justify-center">
+                   <h3 className="text-lg font-bold text-slate-800 mb-6 text-center">Urmărește-ne</h3>
+                   <div className="grid grid-cols-1 gap-4">
+                      
+                      <a href="https://www.facebook.com/scoala11buzau/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 p-4 bg-white/50 hover:bg-blue-600 hover:text-white rounded-2xl transition-all shadow-sm hover:shadow-blue-500/30 cursor-pointer">
+                         <div className="p-2 bg-blue-100 text-blue-600 rounded-full group-hover:bg-white group-hover:text-blue-600 transition-colors">
+                            <Icon name="facebook" size={20} />
+                         </div>
+                         <span className="font-bold">Facebook</span>
+                      </a>
+
+                      <a href="https://www.youtube.com/@scoala11buzau" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 p-4 bg-white/50 hover:bg-red-600 hover:text-white rounded-2xl transition-all shadow-sm hover:shadow-red-500/30 cursor-pointer">
+                         <div className="p-2 bg-red-100 text-red-600 rounded-full group-hover:bg-white group-hover:text-red-600 transition-colors">
+                            <Icon name="youtube" size={20} />
+                         </div>
+                         <span className="font-bold">YouTube</span>
+                      </a>
+
+                      <a href="https://www.tiktok.com/@scoala11buzau" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 p-4 bg-white/50 hover:bg-black hover:text-white rounded-2xl transition-all shadow-sm hover:shadow-gray-500/30 cursor-pointer">
+                         <div className="p-2 bg-gray-100 text-black rounded-full group-hover:bg-white group-hover:text-black transition-colors">
+                            <Icon name="tiktok" size={20} />
+                         </div>
+                         <span className="font-bold">TikTok</span>
+                      </a>
+
+                   </div>
+                </div>
+
+              </div>
+            </div>
+
+            <footer className="mt-16 text-center text-slate-400 text-sm font-medium">
+              <p className="mb-2">&copy; 2025 Media11Hub. Design Liquid Glass.</p>
+              <p>
+                 Created by <button onClick={onTriggerEasterEgg} className="text-brand-zairo font-bold hover:underline focus:outline-none cursor-pointer">Zairo</button>
+              </p>
+            </footer>
+
           </div>
+        );
+      };
+
+      // --- App Root ---
+      const App = () => {
+        const [loading, setLoading] = useState(true);
+        const [showSecret, setShowSecret] = useState(false);
+
+        return (
+          <>
+            <BackgroundBlobs />
+            <EasterEgg isOpen={showSecret} onClose={() => setShowSecret(false)} />
+            
+            {loading ? (
+               <LoadingScreen onComplete={() => setLoading(false)} />
+            ) : (
+               <Dashboard onTriggerEasterEgg={() => setShowSecret(true)} />
+            )}
+          </>
         );
       };
 
